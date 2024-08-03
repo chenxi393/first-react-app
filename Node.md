@@ -15,5 +15,5 @@ React 组件必须以大写字母开头，而 HTML 标签则必须是小写字�
 vercel  Heroku
 
 ## 
-
-home page TOOD
+home page
+* 应该是指定 html相对 static js的目录
