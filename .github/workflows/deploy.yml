@@ -1,0 +1,31 @@
+name: 打包react项目😎
+on: 
+  push:  # 在push的时候 动作
+    branches: ["master"]
+
+permissions:
+  contents: write # 用于写入分支 部署到github page
+
+jobs:
+  npm-build:
+    name: npm-build工作🤦‍♂️
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 读取仓库内容😉🤣❤️💕😒
+      uses: actions/checkout@v4
+
+    - name: 安装依赖&项目打包🤦‍♀️
+      run:  
+        npm install
+        npm run build
+    - name: 部署到github page😂
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: feat_pages
+        folder: build
+
+  jobs2: # 不同的job 我理解是并发的 run 是串行的
+    runs-on: windows-latest
+    steps:
+    - run: node --version
