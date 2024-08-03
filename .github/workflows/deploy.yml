@@ -1,4 +1,4 @@
-name: 打包react项目😎
+name: react项目部署运行😎
 on: 
   push:  # 在push的时候 动作
     branches: ["master"]
@@ -8,11 +8,11 @@ permissions:
 
 jobs:
   npm-build:
-    name: npm-build工作🤦‍♂️
+    name: npm-build到github page🤦‍♂️
     runs-on: ubuntu-latest
     
     steps:
-    - name: 读取仓库内容😉🤣❤️💕😒
+    - name: 读取仓库内容😉🤣❤️💕
       uses: actions/checkout@v4
 
     - name: 安装依赖&项目打包🤦‍♀️
@@ -26,7 +26,29 @@ jobs:
         branch: feat_pages
         folder: build
 
-  jobs2: # 不同的job 我理解是并发的 run 是串行的
-    runs-on: windows-latest
+  build-image: # 不同的job 我理解是并发的 run 是串行的
+    runs-on: ubuntu-latest
+    name: 构建镜像😒
+    
     steps:
-    - run: node --version
+    - name: 读取仓库内容😉🤣
+      uses: actions/checkout@v4
+
+    - name: 登录DockerHub💕
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+    
+    - name: 构建并推送到docker hub❤️
+      uses: docker/build-push-action@v5
+      with:
+        push: true
+        tags: chenxi393/react-app:latest
+
+  deploy: # TODO 部署到服务器上
+    runs-on: ubuntu-latest
+    name: 部署到服务器
+
+    steps:
+    - run: pwd
