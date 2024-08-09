@@ -7,12 +7,12 @@ permissions:
   contents: write # 用于写入分支 部署到github page
 
 jobs:
-  npm-build:
+  build:
     name: npm-build到github page🤦‍♂️
     runs-on: ubuntu-latest
     
     steps:
-    - name: 读取仓库内容😉🤣❤️💕
+    - name: 读取仓库内容😉
       uses: actions/checkout@v4
 
     - name: 安装依赖&项目打包🤦‍♀️
@@ -31,7 +31,7 @@ jobs:
     name: 构建镜像😒
     
     steps:
-    - name: 读取仓库内容😉🤣
+    - name: 读取仓库内容😉
       uses: actions/checkout@v4
 
     - name: 登录DockerHub💕
@@ -48,7 +48,7 @@ jobs:
 
   deploy: # TODO 部署到服务器上
     runs-on: ubuntu-latest
-    name: 部署到服务器
+    name: 部署到服务器🤣
 
     steps:
     - run: pwd

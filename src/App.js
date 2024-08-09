@@ -4,6 +4,7 @@ import MyButton from './button';
 import MyButtons from './buttons';
 import Profile from './style_data';
 import ShoppingList from './list';
+import Game from './game';
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
 
       <Profile />
       <ShoppingList />
+
+      <Game />
     </div>
   );
 }

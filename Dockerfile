@@ -25,10 +25,10 @@ RUN npm run build
 # COPY --from=build /app/build /usr/share/nginx/html
 
 # 暴露端口
-# EXPOSE 80
+EXPOSE 80
 
 # 启动 Nginx
 # CMD ["nginx", "-g", "daemon off;"]
 
-# 暂时不使用nginx
+# 暂时不使用nginx 下面默认3000 端口
 CMD ["npm", "start"]
