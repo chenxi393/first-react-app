@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './style/game.css';
+import '../style/game.css';
 
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]); //  数组嵌套
@@ -59,10 +59,11 @@ function calculateWinner(squares) {
     [0, 4, 8],
     [2, 4, 6],
   ];
+
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return { winner: squares[a], line: lines[i] };
     }
   }
   return null;
@@ -86,10 +87,11 @@ function Board({ xIsNext, squares, onPlay }) {
     onPlay(nextSquares);
   }
 
-  const winner = calculateWinner(squares);
+  let res = calculateWinner(squares);
+  let highlight = res ? res.line : []
   let status;
-  if (winner) {
-    status = "Winner: " + winner;
+  if (res != null) {
+    status = "Winner: " + res.winner;
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
@@ -101,29 +103,32 @@ function Board({ xIsNext, squares, onPlay }) {
     <>
       <div className="status">{status}</div>
       <div className="board-row">
-        <MySquare value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <MySquare value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <MySquare value={squares[2]} onSquareClick={() => handleClick(2)} />
+        <MySquare value={squares[0]} onSquareClick={() => handleClick(0)} highlight={highlight.includes(0)} />
+        <MySquare value={squares[1]} onSquareClick={() => handleClick(1)} highlight={highlight.includes(1)} />
+        <MySquare value={squares[2]} onSquareClick={() => handleClick(2)} highlight={highlight.includes(2)} />
       </div>
       <div className="board-row">
-        <MySquare value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <MySquare value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <MySquare value={squares[5]} onSquareClick={() => handleClick(5)} />
+        <MySquare value={squares[3]} onSquareClick={() => handleClick(3)} highlight={highlight.includes(3)} />
+        <MySquare value={squares[4]} onSquareClick={() => handleClick(4)} highlight={highlight.includes(4)} />
+        <MySquare value={squares[5]} onSquareClick={() => handleClick(5)} highlight={highlight.includes(5)} />
       </div>
       <div className="board-row">
-        <MySquare value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <MySquare value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <MySquare value={squares[8]} onSquareClick={() => handleClick(8)} />
+        <MySquare value={squares[6]} onSquareClick={() => handleClick(6)} highlight={highlight.includes(6)} />
+        <MySquare value={squares[7]} onSquareClick={() => handleClick(7)} highlight={highlight.includes(7)} />
+        <MySquare value={squares[8]} onSquareClick={() => handleClick(8)} highlight={highlight.includes(8)} />
       </div>
     </>
   );
 }
 
 // 使用 props(property) 将每个方块应有的值从父组件（Board）传递到其子组件（Square）
-function MySquare({ value, onSquareClick }) {
+function MySquare({ value, onSquareClick, highlight }) {
   // 由于 state 对于定义它的组件是私有的 你不能直接从 Square 更新 Board 的 state
   return (
-    <button className="square" onClick={onSquareClick}>
+    <button
+      className="square"
+      onClick={onSquareClick}
+      style={{ backgroundColor: highlight ? 'yellow' : 'white' }}>
       {value}
     </button>
   );
