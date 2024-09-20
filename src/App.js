@@ -1,12 +1,15 @@
 import logo from './logo.svg';
 import './style/App.css';
-import MyButton from './button';
-import MyButtons from './buttons';
-import Profile from './style_data';
-import ShoppingList from './list';
-import Game from './game';
+import MyButton from './component/button';
+import MyButtons from './component/buttons';
+import Profile from './component/style_data';
+import ShoppingList from './component/list';
+import Game from './component/game';
 
-function App() {
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import VideoFeed from './component/VideoFeed';
+
+function Home() {
   return (
     <div className="App">
       {/* 使用class name 来指定一个 CSS 的 class*/}
@@ -35,6 +38,31 @@ function App() {
       <Game />
     </div>
   );
+}
+
+function App() {
+  return (
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/video-feed">Video Feed</Link>
+            </li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/video-feed" element={<VideoFeed />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+
 }
 
 export default App;
